@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package greet_service;
+
+// Where to generate files
+option go_package = "./proto"; // another way to do it is with mod name github.com/carlos/grpc/proto
+
+service GreetService {
+  // unary APi call
+  rpc SayHello(NoParam) returns (HelloResponse);
+
+  // client request -> server response with stream
+  rpc SayHelloServerStreaming(NameList) returns (stream HelloResponse);
+
+  // client request with stream
+  rpc SayHelloClientStreaming (stream HelloRequest) returns (MessageList);
+
+  // both client and server communicate each other with streams
+  rpc SayHelloBidirectionalStreaming(stream HelloRequest) returns (stream HelloResponse);
+}
+
+message NoParam {};
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloResponse {
+  string message = 1; // 1 is the position
+}
+
+message NameList {
+  repeated string name = 1; // The order of the repeated values will be preserved.
+}
+
+message MessageList {
+  repeated string message = 1;
+}
+
+// command -> protoc --go_out=. --go-grpc_out=. proto/greet.proto

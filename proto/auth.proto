@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package auth_service;
+
+option go_package = "./proto";
+
+message RequestToken {};
+
+message TokenResponse {
+  string access_token = 1;
+}
+
+service AuthService {
+  // unary
+  rpc GenerateToken(RequestToken) returns (TokenResponse);
+}
