@@ -36,5 +36,3 @@ message NameList {
 message MessageList {
   repeated string message = 1;
 }
-
-// command -> protoc --go_out=. --go-grpc_out=. proto/greet.proto
